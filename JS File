@@ -1,0 +1,132 @@
+//Variables needed
+var userName = prompt("What is your name?");
+var wins = 0;
+var losses = 0;
+var ties = 0;
+var totalGames = 0;
+var playerChoice = "";
+var randomWord = ["Rock", "Paper", "Scissors"];
+var computerChoice = "";
+
+
+//Determine computer's choice
+function computerSelection() {
+computerChoice = randomWord[Math.floor(Math.random() * 3)];
+
+alert("The computer's choice was: " + computerChoice)
+}
+
+//Introduce game rules
+function introduction() {
+
+alert("Hello, " + userName + ". This is how you play the game. Type 'R' for Rock, 'P' for Paper, or 'S' for Scissors. The computer will select one randomly also and we will track your performance. When you are ready to play, just hit the 'Enter' key. Thank you and I hope you enjoy the game.");
+}
+
+//Convert the player's choices to the complete choices
+function playerSelection() {
+playerChoice = prompt("Please make your choice: 'R', 'P', or 'S'.").toUpperCase();
+
+if (playerChoice == "R") {
+playerChoice = "Rock";
+} else if (playerChoice == "P") {
+playerChoice = "Paper";
+} else if (playerChoice == "S") {
+playerChoice = "Scissors";
+} else {
+//Force a valid response or loop back to decesion
+alert("Please enter a valid response");
+playerSelection();
+}
+
+alert("" + userName +"'s choice was: " + playerChoice + ".");
+}
+
+//Allow the user to play or exit
+function gameDecesion() {
+var gameChoice = prompt("Please type 'P' to continue playing. You may also type 'X' to end the game and exit.").toUpperCase();
+
+//complete game loop
+if (gameChoice == "P") {
+playerSelection();
+computerSelection();
+gameResult();
+//end game
+} else if (gameChoice == "X") {
+endGame();
+//loop back to start
+}else {
+startGame();
+}
+}
+
+//If it is a win
+function win() {
+wins++
+alert(userName + " Wins!");
+}
+
+//If it is a loss
+function loss() {
+losses++
+alert(userName + " Loses...");
+}
+
+//If it is a tie
+function tie() {
+ties++
+alert("It is a tie...");
+}
+
+//Determine the results
+function gameResult() {
+
+if (playerChoice == "Rock" && computerChoice == "Scissors") {
+win();
+} else if (playerChoice == "Rock" && computerChoice == "Paper") {
+loss();
+} else if (playerChoice == "Paper" && computerChoice == "Rock") {
+win();
+} else if (playerChoice == "Paper" && computerChoice == "Scissors") {
+loss();
+} else if (playerChoice == "Scissors" && computerChoice == "Paper") {
+win();
+} else if (playerChoice == "Scissors" && computerChoice == "Rock") {
+loss();
+} else {
+tie();
+}
+
+//loop back to the game until the user exits
+gameDecesion();
+}
+
+//Run main game functions
+function startGame() {
+
+gameDecesion();
+}
+
+//Display total wins, losses, and ties
+function endGame() {
+alert("Thank you for playing, " + userName +"! Your total wins were: " + wins + ". Your total losses were: " + losses + ". Your total ties were: " + ties + ".");
+
+//Display percentages
+percentages();
+}
+
+//determine percentages
+function percentages() {
+totalGames = (wins + losses + ties);
+var winAverage = Math.floor((wins / totalGames) * 100);
+var lossAverage = Math.floor((losses / totalGames) * 100);
+var tieAverage = Math.floor((ties / totalGames) * 100);
+
+alert("Your averages were as follows: You won " + winAverage + "% of your games. You lost " + lossAverage + "% of your games. You tied " + tieAverage + "% of your games.");
+
+}
+
+
+
+//Call intro and game start functions
+introduction();
+startGame();
